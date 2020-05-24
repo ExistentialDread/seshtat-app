@@ -1,0 +1,258 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1 *ngIf="!edit">Add Condition</h1>
+        <h1 *ngIf="edit">Edit Condition</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<div class="sub-header">
+  <ion-item>
+    <ion-input type="text" placeholder="Name" [(ngModel)]="conditionCopy.title" (change)="onChanges()"></ion-input>
+    <ion-icon [name]="conditionCopy.icon" slot="start" color="primary" align-self-center></ion-icon>
+  </ion-item>
+</div>
+
+<ion-content>
+  <div class="container">
+    <div class="group">
+      <ion-text color="medium" class="sub-title">Icons</ion-text>
+      <div>
+        <ion-button slot="icon-only" *ngFor="let icon of icons" color="medium" fill="transparent"
+          (click)="setIcon(icon)">
+          <ion-icon [name]="icon"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <ion-text color="medium" class="sub-title">Requirements</ion-text>
+
+    <ion-list>
+      <!-- Great -->
+      <ion-item button (click)="toggleSection(0)">
+        <ion-icon name="chevron-down-outline" *ngIf="sections[0]"></ion-icon>
+        <ion-icon name="chevron-forward-outline" *ngIf="!sections[0]"></ion-icon>
+
+        <div class="rating great">
+          <ion-icon [src]="faces.great"></ion-icon>
+          <h3>Great</h3>
+        </div>
+
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addRequirement($event, conditionCopy.grading.great)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <div *ngIf="sections[0]" class="section">
+        <div class="requirement" *ngFor="let requirement of conditionCopy.grading.great; let i = index">
+          <div class="requirement-header">
+            <ion-text color="light">Requirement {{i+1}}</ion-text>
+            <ion-buttons>
+              <ion-button slot="icon-only" color="light" size="small" (click)="editRequirement(requirement)">
+                <ion-icon name="create" size="small"></ion-icon>
+              </ion-button>
+              <ion-button slot="icon-only" color="light" size="small"
+                (click)="removeRequirement(conditionCopy.grading.great, i)">
+                <ion-icon name="close" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div class="list" *ngIf="activities">
+            <div class="item" *ngFor="let simpleCondition of requirement">
+              <ion-item *ngIf="simpleCondition.activity">
+                <ion-icon [name]="simpleCondition.activity.icon" slot="start" color="primary"></ion-icon>
+                <ion-text>{{ simpleCondition.activity.title | titlecase}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Min" [(ngModel)]="simpleCondition.minValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Max" [(ngModel)]="simpleCondition.maxValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Good -->
+      <ion-item button (click)="toggleSection(1)">
+        <ion-icon name="chevron-down-outline" *ngIf="sections[1]"></ion-icon>
+        <ion-icon name="chevron-forward-outline" *ngIf="!sections[1]"></ion-icon>
+
+        <div class="rating good">
+          <ion-icon [src]="faces.good"></ion-icon>
+          <h3>Good</h3>
+        </div>
+
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addRequirement($event, conditionCopy.grading.good)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <div *ngIf="sections[1]" class="section">
+        <div class="requirement" *ngFor="let requirement of conditionCopy.grading.good; let i = index">
+          <div class="requirement-header">
+            <ion-text color="light">Requirement {{i+1}}</ion-text>
+            <ion-buttons>
+              <ion-button slot="icon-only" color="light" size="small" (click)="editRequirement(requirement)">
+                <ion-icon name="create" size="small"></ion-icon>
+              </ion-button>
+              <ion-button slot="icon-only" color="light" size="small"
+                (click)="removeRequirement(conditionCopy.grading.good, i)">
+                <ion-icon name="close" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div class="list" *ngIf="activities">
+            <div class="item" *ngFor="let simpleCondition of requirement">
+              <ion-item *ngIf="simpleCondition.activity">
+                <ion-icon [name]="simpleCondition.activity.icon" slot="start" color="primary"></ion-icon>
+                <ion-text>{{ simpleCondition.activity.title | titlecase}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Min" [(ngModel)]="simpleCondition.minValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Max" [(ngModel)]="simpleCondition.maxValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Meh -->
+      <ion-item button (click)="toggleSection(2)">
+        <ion-icon name="chevron-down-outline" *ngIf="sections[2]"></ion-icon>
+        <ion-icon name="chevron-forward-outline" *ngIf="!sections[2]"></ion-icon>
+
+        <div class="rating Meh">
+          <ion-icon [src]="faces.meh"></ion-icon>
+          <h3>Meh</h3>
+        </div>
+
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addRequirement($event, conditionCopy.grading.meh)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <div *ngIf="sections[2]" class="section">
+        <div class="requirement" *ngFor="let requirement of conditionCopy.grading.meh; let i = index">
+          <div class="requirement-header">
+            <ion-text color="light">Requirement {{i+1}}</ion-text>
+            <ion-buttons>
+              <ion-button slot="icon-only" color="light" size="small" (click)="editRequirement(requirement)">
+                <ion-icon name="create" size="small"></ion-icon>
+              </ion-button>
+              <ion-button slot="icon-only" color="light" size="small"
+                (click)="removeRequirement(conditionCopy.grading.meh, i)">
+                <ion-icon name="close" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div class="list" *ngIf="activities">
+            <div class="item" *ngFor="let simpleCondition of requirement">
+              <ion-item *ngIf="simpleCondition.activity">
+                <ion-icon [name]="simpleCondition.activity.icon" slot="start" color="primary"></ion-icon>
+                <ion-text>{{ simpleCondition.activity.title | titlecase}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Min" [(ngModel)]="simpleCondition.minValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Max" [(ngModel)]="simpleCondition.maxValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Bad -->
+      <ion-item button (click)="toggleSection(3)">
+        <ion-icon name="chevron-down-outline" *ngIf="sections[3]"></ion-icon>
+        <ion-icon name="chevron-forward-outline" *ngIf="!sections[3]"></ion-icon>
+
+        <div class="rating bad">
+          <ion-icon [src]="faces.bad"></ion-icon>
+          <h3>Bad</h3>
+        </div>
+
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addRequirement($event, conditionCopy.grading.bad)">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <div *ngIf="sections[3]" class="section">
+        <div class="requirement" *ngFor="let requirement of conditionCopy.grading.bad; let i = index">
+          <div class="requirement-header">
+            <ion-text color="light">Requirement {{i+1}}</ion-text>
+            <ion-buttons>
+              <ion-button slot="icon-only" color="light" size="small" (click)="editRequirement(requirement)">
+                <ion-icon name="create" size="small"></ion-icon>
+              </ion-button>
+              <ion-button slot="icon-only" color="light" size="small"
+                (click)="removeRequirement(conditionCopy.grading.bad, i)">
+                <ion-icon name="close" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div class="list" *ngIf="activities">
+            <div class="item" *ngFor="let simpleCondition of requirement">
+              <ion-item *ngIf="simpleCondition.activity">
+                <ion-icon [name]="simpleCondition.activity.icon" slot="start" color="primary"></ion-icon>
+                <ion-text>{{ simpleCondition.activity.title | titlecase}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Min" [(ngModel)]="simpleCondition.minValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+              <ion-item *ngIf="simpleCondition.activity.countable">
+                <ion-input type="text" placeholder="Max" [(ngModel)]="simpleCondition.maxValue" (change)="onChanges()">
+                </ion-input>
+              </ion-item>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="updateCondition()" *ngIf="edit">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save Condition
+      </ion-button>
+      <ion-button color="primary" style="flex: 1" (click)="createCondition()" *ngIf="!edit">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save Condition
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1>Activities</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container" *ngIf="activities">
+    <ion-list *ngIf="activities.length > 0">
+      <ion-item *ngFor="let activity of activities; let i = index" (click)="onSelectActivity(activity)" button>
+        <ion-icon class="activity-icon" [name]="activity.icon" color="primary"></ion-icon>
+        <ion-label class="name">{{ activity.title | titlecase}}</ion-label>
+        <ion-label class="unit">{{ activity.unit }}</ion-label>
+        <ion-buttons>
+          <ion-button slot="icon-only" color="dark" size="small" (click)="onDeleteActivity($event, activity, i)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <div class="no-activities" *ngIf="activities.length == 0">
+      <ion-label color="medium">You have deleted all activities. Please create new ones.</ion-label>
+    </div>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="onAddActivity()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add Activity
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

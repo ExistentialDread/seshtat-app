@@ -1,0 +1,59 @@
+<ion-content>
+  <div class="container">
+    <div class="description">
+      <ion-text color="primary" class="title">
+        <ion-icon src="./assets/icon.svg" class="logo"></ion-icon>
+        <h1>Seshtat</h1>
+      </ion-text>
+      <div class="faces" *ngIf="!faces">
+        <ion-icon src="./assets/great.svg"></ion-icon>
+        <ion-icon src="./assets/good.svg"></ion-icon>
+        <ion-icon src="./assets/meh.svg"></ion-icon>
+        <ion-icon src="./assets/bad.svg"></ion-icon>
+        <ion-icon src="./assets/awful.svg"></ion-icon>
+      </div>
+      <div class="faces" *ngIf="faces">
+        <ion-icon [src]="faces.great"></ion-icon>
+        <ion-icon [src]="faces.good"></ion-icon>
+        <ion-icon [src]="faces.meh"></ion-icon>
+        <ion-icon [src]="faces.bad"></ion-icon>
+        <ion-icon [src]="faces.awful"></ion-icon>
+      </div>
+      <ion-text color="medium">
+        <p class="sub-header">
+          Keep track of your daily activities and let the app rate your day!
+        </p>
+        <p>
+          Seshtat is an app built initially for friends and family.
+          It will never contain ads or sell your data, so please support it by leaving a review or inviting
+          me for a cup of coffee<a href="https://github.com/ExistentialDread/seshtat-app">(Github)</a>.
+        </p>
+      </ion-text>
+      <ion-button *ngIf="!user" color="primary" (click)="openRegister()">
+        Get started!
+      </ion-button>
+      <ion-button *ngIf="user" color="primary" [routerLink]="['/calendar']">
+        Calendar
+      </ion-button>
+    </div>
+
+    <div id="download">
+      <ion-text color="medium">
+        <p>
+          Will be available soon on Apple devices!
+        </p>
+      </ion-text>
+      <div>
+        <ion-button fill="clear" size="large" href="https://www.seshtat.com">
+          <ion-icon name="laptop-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="large">
+          <ion-icon name="logo-android" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="large" disabled>
+          <ion-icon name="logo-apple" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

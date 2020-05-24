@@ -1,0 +1,109 @@
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .logo-icon-bg {
+        border-radius: 5px;
+        background-color: var(--ion-color-primary);
+        padding: 4px;
+        ion-icon {
+            font-size: 25px;
+            fill: white;
+        }
+    }
+    h1 {
+        margin: 0px 0px 0px 5px;
+        font-variant: small-caps;
+    }
+}
+
+.container {
+    padding: 16px;
+    @media (max-width: 576px) {
+        & {
+            padding: 5px;
+        }
+    }
+    .group {
+        margin-bottom: 30px;
+        .sub-title {
+            font-size: 20px;
+            font-Variant: small-caps;
+        }
+
+        .list {
+            .item {
+                display: flex;
+                ion-item {
+                    flex: 1;
+                }
+                ion-item:first-child {
+                    flex: 3;
+                }
+
+            }
+        }
+
+        .grading {
+            ion-icon {
+                font-size: 35px;
+            }
+            ion-input {
+                margin-left: 16px;
+            }
+            .color {
+                width: 30px;
+                height: 30px;
+                --border-radius: 50%;
+            }
+            &.great {
+                ion-icon, ion-input {
+                    color: var(--sesh-great-color);
+                }
+                .color {
+                    --background: var(--sesh-great-color);
+                }
+            }
+            &.good {
+                ion-icon, ion-input {
+                    color: var(--sesh-good-color);
+                }
+                .color {
+                    --background: var(--sesh-good-color);
+                }
+            }
+            &.meh {
+                ion-icon, ion-input {
+                    color: var(--sesh-meh-color);
+                }
+                .color {
+                    --background: var(--sesh-meh-color);
+                }
+            }
+            &.bad {
+                ion-icon, ion-input {
+                    color: var(--sesh-bad-color);
+                }
+                .color {
+                    --background: var(--sesh-bad-color);
+                }
+            }
+            &.awful {
+                ion-icon, ion-input {
+                    color: var(--sesh-awful-color);
+                }
+                .color {
+                    --background: var(--sesh-awful-color);
+                }
+            }
+        }
+    }
+
+    .footer {
+        display: flex;
+        ion-button {
+            text-transform: capitalize;
+            font-size: 12px;
+        }
+    }
+}

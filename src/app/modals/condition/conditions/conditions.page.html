@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1>Conditions</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="conditions">
+    <ion-list *ngIf="conditions.length > 0">
+      <ion-item *ngFor="let condition of conditions; let i = index" (click)="onSelectCondition(condition)" button>
+        <ion-icon class="icon" [name]="condition.icon" color="primary"></ion-icon>
+        <ion-label class="name">{{ condition.title | titlecase}}</ion-label>
+        <ion-buttons>
+          <ion-button slot="icon-only" color="dark" size="small" (click)="onDeleteCondition($event, condition, i)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <div class="no-items" *ngIf="conditions.length == 0">
+      <ion-label color="medium">You have deleted all conditions. Please create new ones.</ion-label>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="onAddCondition()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add Condition
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

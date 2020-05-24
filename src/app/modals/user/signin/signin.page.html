@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1>Login</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSignin()" *ngIf="!forgotPassword">
+      <ion-item>
+        <ion-label position="floating" color="medium">Username or Email</ion-label>
+        <ion-input type="text" formControlName="username"></ion-input>
+        <ion-icon name="person-circle-outline" slot="start" color="primary"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validationMessages.username">
+          <ion-text class="error-message" color="danger"
+            *ngIf="loginForm.get('username').hasError(validation.type) && (loginForm.get('username').dirty || loginForm.get('username').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            {{ validation.message }}
+          </ion-text>
+        </ng-container>
+      </div>
+
+      <ion-item>
+        <ion-label position="floating" color="medium">Password</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-icon name="lock-closed-outline" slot="start" color="primary"></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validationMessages.password">
+          <ion-text class="error-message" color="danger"
+            *ngIf="loginForm.get('password').hasError(validation.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+          </ion-text>
+        </ng-container>
+      </div>
+
+      <div id="forgot-password">
+        <ion-button fill="clear" (click)="onForgotPassword()">Forgot password?</ion-button>
+      </div>
+      <ion-button type="submit" expand="block" [disabled]="!loginForm.valid">
+        <ion-icon slot="start" name="log-in-outline"></ion-icon>
+        Login
+      </ion-button>
+    </form>
+
+    <form [formGroup]="forgotPasswordForm" (ngSubmit)="onSendPasswordResetEmail()" *ngIf="forgotPassword">
+      <ion-item>
+        <ion-label position="floating" color="medium">Email</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+        <ion-icon name="mail-outline" slot="start" color="primary" align-self-center></ion-icon>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validationMessages.email">
+          <ion-text class="error-message" color="danger"
+            *ngIf="forgotPasswordForm.get('email').hasError(validation.type) && (forgotPasswordForm.get('email').dirty || forgotPasswordForm.get('email').touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            {{ validation.message }}
+          </ion-text>
+        </ng-container>
+      </div>
+
+      <div id="forgot-password">
+        <ion-button fill="clear" (click)="onForgotPassword(false)">Go back to login?</ion-button>
+      </div>
+      <ion-button type="submit" expand="block" [disabled]="!forgotPasswordForm.valid">
+        <ion-icon slot="start" name="send-outline"></ion-icon>
+        Send password reset email
+      </ion-button>
+    </form>
+    <!-- <div class="separator">
+    <ion-text color="medium">Or login with:</ion-text>
+  </div>
+
+  <ion-buttons>
+    <ion-button class="facebook" fill="solid" disabled>
+      <ion-icon name="logo-facebook"></ion-icon>
+    </ion-button>
+    <ion-button class="twitter" fill="solid" disabled>
+      <ion-icon name="logo-twitter"></ion-icon>
+    </ion-button>
+    <ion-button class="google" fill="solid" disabled>
+      <ion-icon name="logo-google"></ion-icon>
+    </ion-button>
+  </ion-buttons> -->
+
+
+    <ion-text color="medium" id="register">
+      <p>
+        If you don't have an account, <br> please <a (click)="goToSignup()">register</a> first!
+      </p>
+    </ion-text>
+
+  </div>
+</ion-content>

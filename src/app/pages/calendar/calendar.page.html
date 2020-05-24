@@ -1,0 +1,12 @@
+<ion-content>
+    <ion-grid *ngIf="days">
+        <ion-row>
+            <ion-col *ngFor="let d of weekDays;">{{ d }}</ion-col>
+        </ion-row>
+        <ion-row *ngFor="let row of days">
+            <ion-col *ngFor="let day of row">
+                <app-day [day]="day" (selected)="onDaySelected($event)" [show]="settings.showActivities"></app-day>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

@@ -1,0 +1,62 @@
+<ion-content>
+  <ion-segment [(ngModel)]="mode" (ionChange)="segmentChanged()">
+    <ion-segment-button value="m">
+      <ion-label>Per Month</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="w">
+      <ion-label>Last 4W</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="all">
+      <ion-label>All</ion-label>
+    </ion-segment-button>
+    <!-- <ion-segment-button value="1y">
+      <ion-label>1y</ion-label>
+    </ion-segment-button> -->
+  </ion-segment>
+  <div class="current-date" *ngIf="mode == 'm'">
+    <ion-buttons>
+      <ion-button slot="icon-only" (click)="getPrevious()" color="primary">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+      <ion-label color="primary">{{ current }}</ion-label>
+      <ion-button slot="icon-only" (click)="getNext()" color="primary">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm>
+        <ion-card>
+          <div class="chart overallPie" *ngIf="overallPie.options">
+            <div echarts [options]="overallPie.options"></div>
+            <div class="face" *ngIf="average">
+              <ion-icon [ngClass]="average.rating" [src]="average.icon"></ion-icon>
+            </div>
+          </div>
+        </ion-card>
+      </ion-col>
+      
+      <ion-col size="12" size-sm>
+        <ion-card>
+          <div class="chart" *ngIf="weekdayRatingBars.options">
+            <div echarts [options]="weekdayRatingBars.options"></div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <div class="chart" *ngIf="ratingLine.options">
+            <div echarts [options]="ratingLine.options"></div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

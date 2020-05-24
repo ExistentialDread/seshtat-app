@@ -1,0 +1,44 @@
+<ion-content>
+  <div *ngIf="activities">
+    <div class="activities">
+      <app-icon-toggle *ngFor="let ac of activities" [icon]="ac.icon" [label]="ac.title" [selected]="ac.selected"
+        (toggled)="toggleActivity($event, ac)">
+      </app-icon-toggle>
+    </div>
+    <ion-segment [(ngModel)]="mode" (ionChange)="segmentChanged()">
+      <ion-segment-button value="m" selected>
+        <ion-label>Per Month</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="w">
+        <ion-label>Last 4W</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="all">
+        <ion-label>All</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div class="current-date" *ngIf="mode == 'm'">
+      <ion-buttons>
+        <ion-button slot="icon-only" (click)="getPrevious()" color="primary">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-button>
+        <ion-label color="primary">{{ current }}</ion-label>
+        <ion-button slot="icon-only" (click)="getNext()" color="primary">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+
+    <ion-card>
+      <div class="lineChart" >
+        <div *ngIf="activitiesLine.options" echarts [options]="activitiesLine.options"></div>
+      </div>
+    </ion-card>
+  </div>
+
+  <ion-text color="medium" *ngIf="!activities">
+    <div>
+      You have created no activities, so this page is as empty as my heart.
+    </div>
+  </ion-text>
+</ion-content>

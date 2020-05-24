@@ -1,0 +1,107 @@
+g.node {
+  fill: #333333;
+}
+g.node:hover {
+  cursor: pointer;
+}
+path.node-outline {
+  stroke: #333333;
+  fill: white;
+  stroke-width: 2;
+}
+
+path.node-selected-indicator {
+  fill: none;
+}
+g.node-selected path.node-selected-indicator {
+  /*fill: white;/**/
+  fill: none;
+  stroke: white;
+  stroke-width:2;/**/
+}
+
+g.node.locked {
+  fill: gray;
+}
+g.node.locked path.node-outline {
+  stroke: gray;
+}
+
+
+g.node:hover, g.node-selected {
+  fill:white !important;
+}
+g.node:hover path.node-outline, g.node-selected path.node-outline {
+  fill: #E44331; /*#ff4081;*/
+}
+
+g.node path.node-outline {
+    /* background color of any node */
+    fill: #4e6376;
+    /* outline color */
+    stroke: #909c9b;
+}
+/* Done */
+g.node.done path.node-outline {
+    /* background Color of done */
+    fill: #e8d470; /* #EAAC00;*/
+    /* outline color */
+    stroke: #2a3233;
+}
+g.node.done {
+    /* text color of done */
+    fill: #2a3233;
+}
+
+/* Inprogress */
+g.node.inprogress {
+    /* text color of inprogress */
+    fill: white;
+}
+
+/* Locked */
+g.node.locked {
+    /* text color of inprogress */
+    fill: #909c9b;
+}
+
+/* God */
+g.node.god path.node-outline {
+    /* Background color */
+    fill: #E44331;
+    /* outline color */
+    stroke: #ff5542;
+}
+g.node.god {
+    /* text color of god */
+    fill: white;
+}
+
+
+text.icon {
+  font-family: 'skills';
+  font-size: 36pt;
+}
+text.cost {
+  font-family: 'Roboto Condensed', sans-serif;
+  text-anchor: middle;
+  font-size: 12pt;
+}
+
+/* Edges */
+g.edge, path.edge-end {
+  stroke:#909c9b;
+  fill:none;
+  stroke-width: 2;
+}
+path.edge-arrow {
+  fill: #909c9b;
+}
+
+g.edge.done, g.node.done .edge-end {
+  stroke: #e8d470;
+}
+.node.done .edge-arrow {
+    fill: #e8d470;
+}
+

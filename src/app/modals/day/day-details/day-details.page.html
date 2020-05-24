@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1 *ngIf="dayCopy">{{dayCopy.date.format('MMM Do YYYY')}}</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container" *ngIf="dayCopy">
+    <div *ngIf="dayCopy.rating" class="rating {{ dayCopy.rating }}">
+      <ion-icon [src]="faces[dayCopy.rating]"></ion-icon>
+      <h3 class="day-rating"><span>{{dayCopy.rating | titlecase}} - </span><span class="day-condition"
+          *ngIf="dayCopy.condition">{{ dayCopy.condition.title }}</span>
+      </h3>
+    </div>
+    <div class="rating meh" *ngIf="!dayCopy.rating">
+      <ion-icon src="assets/ukw.svg"></ion-icon>
+      <h3 class="day-rating"><span>Not yet rated</span>
+      </h3>
+    </div>
+
+    <div class="section">
+      <ion-label class="title" color="dark">Records</ion-label>
+      <div *ngIf="dayCopy.records.length == 0">
+        <ion-label class="small">No records for this day.</ion-label>
+      </div>
+
+      <ion-list *ngIf="dayCopy.records.length > 0">
+        <ion-item *ngFor="let rec of dayCopy.records">
+          <ion-icon [name]="rec.activity.icon" padding color="primary"></ion-icon>
+          <ion-label style="flex:1">{{ rec.activity.title | titlecase}}</ion-label>
+          <ion-input type="number" step="0.5" [(ngModel)]="rec.value" (input)="onChanges()"
+            *ngIf="rec.activity.countable"></ion-input>
+          <!-- <ion-label>{{ rec.activity.unit }}</ion-label> -->
+          <ion-buttons>
+            <ion-button slot="icon-only" color="dark" size="small" (click)="toggleActivity(true,rec.activity.id)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="section">
+      <ion-label class="title" color="dark">Activities</ion-label>
+      <div class="items" padding>
+        <app-icon-toggle *ngFor="let ac of activities" [icon]="ac.icon" [label]="ac.title" [selected]="ac.selected"
+          (toggled)="toggleActivity($event, ac.id)">
+        </app-icon-toggle>
+        <app-icon-toggle icon="add" label="New/Edit" (toggled)="openActivitiesModal()">
+        </app-icon-toggle>
+      </div>
+    </div>
+
+    <div class="section">
+      <ion-label class="title" color="dark">Conditions</ion-label>
+      <div class="items" padding>
+        <app-icon-toggle *ngFor="let c of conditions" [icon]="c.icon" [label]="c.title" [selected]="c.selected"
+          (toggled)="toggleCondition($event, c.id)">
+        </app-icon-toggle>
+        <app-icon-toggle icon="add" label="New/Edit" (toggled)="openConditionsModal()"></app-icon-toggle>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<div class="footer" padding>
+  <ion-button color="primary" style="flex: 1" (click)="applyChanges()">
+    <ion-icon slot="start" name="checkmark"></ion-icon>
+    <ion-label>Save & Rate</ion-label>
+  </ion-button>
+
+  <ion-button color="danger" (click)="resetDay()">
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    <ion-label>Reset</ion-label>
+  </ion-button>
+  <!-- <ion-fab horizontal="center" vertical="bottom">
+    <div>
+      <ion-fab-button (click)="applyChanges()">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+      <ion-label class="small">Save & Rate</ion-label>
+    </div>
+  </ion-fab>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <div>
+      <ion-fab-button size="small" color="danger" (click)="resetDay()">
+        <ion-icon name="refresh"></ion-icon>
+      </ion-fab-button>
+      <ion-label class="small">Reset</ion-label>
+    </div>
+  </ion-fab> -->
+</div>

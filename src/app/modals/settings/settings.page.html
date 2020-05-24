@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1>Settings</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container" *ngIf="settings">
+
+    <div class="group">
+      <ion-text color="medium" class="sub-title">Calendar Preferences</ion-text>
+
+      <!-- <ion-card> -->
+      <ion-item>
+        <ion-label>First day of the week</ion-label>
+        <ion-select value="0" okText="Save" cancelText="Cancel" [(ngModel)]="settings.firstDayOfWeek"
+          (click)="onChanges()">
+          <ion-select-option value="0">Sunday</ion-select-option>
+          <ion-select-option value="1">Monday</ion-select-option>
+          <ion-select-option value="2">Tuesday</ion-select-option>
+          <ion-select-option value="3">Wednesday</ion-select-option>
+          <ion-select-option value="4">Thursday</ion-select-option>
+          <ion-select-option value="5">Friday</ion-select-option>
+          <ion-select-option value="6">Saturday</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Show Activities for Each Day</ion-label>
+        <ion-toggle [(ngModel)]="settings.showActivities" (ionChange)="onChanges()">
+        </ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Dark Theme</ion-label>
+        <ion-toggle [(ngModel)]="settings.darkMode" (ionChange)="onChanges();changeTheme()">
+        </ion-toggle>
+      </ion-item>
+
+
+      <ion-item class="grading great">
+        <ion-icon [src]="faces.great"></ion-icon>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="settings.grading.great.text" (ionChange)="onChanges()">
+        </ion-input>
+        <ion-button class="color" (click)="openColorPick($event, 0)">
+        </ion-button>
+      </ion-item>
+
+      <ion-item class="grading good">
+        <ion-icon [src]="faces.good"></ion-icon>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="settings.grading.good.text" (ionChange)="onChanges()">
+        </ion-input>
+        <ion-button class="color" (click)="openColorPick($event, 1)"></ion-button>
+      </ion-item>
+
+      <ion-item class="grading meh">
+        <ion-icon [src]="faces.meh"></ion-icon>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="settings.grading.meh.text" (ionChange)="onChanges()">
+        </ion-input>
+        <ion-button class="color" (click)="openColorPick($event, 2)"></ion-button>
+      </ion-item>
+
+      <ion-item class="grading bad">
+        <ion-icon [src]="faces.bad"></ion-icon>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="settings.grading.bad.text" (ionChange)="onChanges()">
+        </ion-input>
+        <ion-button class="color" (click)="openColorPick($event, 3)"></ion-button>
+      </ion-item>
+
+      <ion-item class="grading awful">
+        <ion-icon [src]="faces.awful"></ion-icon>
+        <ion-input type="text" placeholder="Name" [(ngModel)]="settings.grading.awful.text" (ionChange)="onChanges()">
+        </ion-input>
+        <ion-button class="color" (click)="openColorPick($event, 4)"></ion-button>
+      </ion-item>
+      <!-- </ion-card> -->
+    </div>
+
+
+    <div class="group">
+      <ion-text color="medium" class="sub-title">Account Settings</ion-text>
+      <ion-item button (click)="updateEmail()">
+        <ion-label>Change Email</ion-label>
+      </ion-item>
+      <ion-item button (click)="resetAccount()">
+        <ion-label>Reset Account Data</ion-label>
+      </ion-item>
+      <ion-item button (click)="deleteAccount()">
+        <ion-label color="primary">Delete Account</ion-label>
+      </ion-item>
+      <!-- username -->
+      <!-- email -->
+      <!-- Age -->
+      <!-- change password -->
+      <!-- Delete data -->
+      <!-- remove account -->
+    </div>
+
+    <div class="group">
+      <ion-text color="medium" class="sub-title">Add-ons</ion-text>
+      <!-- <ion-card> -->
+      <ion-item>
+        <ion-label>Existential Dread</ion-label>
+        <ion-toggle [(ngModel)]="settings.addons.existentialDread.enabled" (ionChange)="onChanges();flipIcons()">
+        </ion-toggle>
+      </ion-item>
+      <div *ngIf="settings.addons.existentialDread.enabled">
+        <ion-item *ngIf="settings.addons.existentialDread.enabled">
+          <ion-label>Switch Faces</ion-label>
+          <ion-toggle [(ngModel)]="settings.addons.existentialDread.flipIcons" (ionChange)="onChanges();flipIcons()">
+          </ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Display Age Timer</ion-label>
+          <ion-toggle [(ngModel)]="settings.addons.ageTimer.enabled" (ionChange)="onChanges()"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Date of Birth</ion-label>
+          <ion-datetime [(ngModel)]="settings.addons.ageTimer.birthday" display-timezone="utc"
+            (ionChange)="onChanges()">
+          </ion-datetime>
+        </ion-item>
+      </div>
+      <!-- Display Age Counter -->
+      <!-- Link account to Zelus -->
+      <!-- </ion-card> -->
+    </div>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="applyChanges()">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        <ion-label>Save</ion-label>
+      </ion-button>
+      <ion-button color="danger" (click)="resetSettings()">
+        <ion-icon slot="start" name="refresh"></ion-icon>
+        <ion-label>Reset</ion-label>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

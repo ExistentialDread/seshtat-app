@@ -1,0 +1,28 @@
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .logo-icon-bg {
+        border-radius: 5px;
+        background-color: var(--ion-color-primary);
+        padding: 4px;
+        ion-icon {
+            font-size: 25px;
+            fill: white;
+        }
+    }
+    h1 {
+        margin: 0px 0px 0px 5px;
+        font-variant: small-caps;
+    }
+}
+
+
+.footer {
+    display: flex;
+    padding: 16px;
+    ion-button {
+        font-size: 12px;
+        text-transform: capitalize;
+    }
+}

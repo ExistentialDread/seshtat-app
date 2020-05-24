@@ -1,0 +1,28 @@
+ion-content {
+    display: flex;
+}
+
+ion-grid {
+    flex: 1;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+
+    ion-row {
+        flex: 1;
+        border-bottom: 1px solid #dadce0;
+        &:first-child {
+            flex: none;
+            border-bottom: none;
+            ion-col {
+                text-align: center;
+                color: var(--ion-color-medium-shade);// #70757a;
+                font-size: 12px;
+            }
+        }
+        ion-col {
+            border-left: 1px solid #dadce0;
+        }
+    }
+}

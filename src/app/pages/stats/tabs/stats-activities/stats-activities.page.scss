@@ -1,0 +1,29 @@
+.current-date, .activities {
+    padding: 10px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-style: solid;
+    border-color: var(--ion-border-color,#ededed);
+    border-width: 1px 0px 1px 0px;
+}
+
+ion-card {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.lineChart {
+    width: 100%;
+    div {
+        width: 100%;
+        height: 430px;
+    }
+}
+
+ion-content {
+    & > ion-text div {
+        text-align: center;
+        margin: 16px;
+    }
+}

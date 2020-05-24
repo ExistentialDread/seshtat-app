@@ -1,0 +1,56 @@
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 16px;
+  text-align: center;
+  .description {
+    margin: 16px;
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      h1 {
+          font-size: 64px;
+          font-variant: small-caps;
+      }
+      .logo {
+          height: 64px;
+          width: 64px;
+          margin-right: 16px;
+          fill: var(--ion-color-primary);
+      }
+    }
+    .sub-header {
+      font-size: 20px;
+    }
+    .faces {
+      font-size: 42px;
+      color: var(--ion-color-primary);
+    }
+  }
+  #download {
+    div {
+        display: flex;
+        justify-content: center;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    .description {
+      .title {
+        h1 {
+          font-size: 52px;
+        }
+        .logo {
+          height: 52px;
+          width: 52px;
+        }
+      }
+    }
+  }
+}

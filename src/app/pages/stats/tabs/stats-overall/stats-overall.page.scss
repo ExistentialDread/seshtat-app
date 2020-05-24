@@ -1,0 +1,29 @@
+
+.current-date {
+    padding: 10px 0px;
+    display: flex;
+    justify-content: center;
+    border-style: solid;
+    border-color: var(--ion-border-color,#ededed);
+    border-width: 1px 0px 1px 0px;
+}
+
+ion-card {
+    margin-bottom: 16px;
+}
+
+.chart > div {
+    height: 430px;
+}
+
+.overallPie {
+    position: relative;
+    .face {
+        position: absolute;
+        top: calc(50% - 43px);
+        left: calc(50% - 40px);
+        ion-icon {
+            font-size: 80px;
+        }
+    }
+}

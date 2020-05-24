@@ -1,0 +1,7 @@
+{
+  "name": "seshtat-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

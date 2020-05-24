@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="12">
+        <ion-card>
+          <div class="state-of-revolt" *ngIf="stateChartOptions">
+            <div echarts [options]="stateChartOptions"></div>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

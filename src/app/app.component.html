@@ -1,0 +1,142 @@
+<ion-app>
+  <ion-header>
+    <ion-toolbar>
+
+      <ion-buttons slot="start">
+        <ion-menu-button color="primary"></ion-menu-button>
+      </ion-buttons>
+
+      <div class="middle">
+        <div button class="logo" (click)="goTo('/home')" [class.ion-hide-sm-down]="calendar">
+          <div class="logo-icon-bg">
+            <ion-icon src="./assets/icon.svg"></ion-icon>
+          </div>
+          <ion-text color="primary">
+            <h1>Seshtat</h1>
+          </ion-text>
+        </div>
+
+        <div *ngIf="calendar">
+          <ion-buttons>
+            <ion-button slot="icon-only" (click)="calendarService.getPreviousMonth()" color="primary">
+              <ion-icon name="arrow-back"></ion-icon>
+            </ion-button>
+            <ion-label color="primary">{{ currentDate?.format('MMMM YYYY') }}</ion-label>
+            <ion-button slot="icon-only" (click)="calendarService.getNextMonth()" color="primary">
+              <ion-icon name="arrow-forward"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+      </div>
+
+      <ion-buttons slot="primary" class="ion-hide-sm-down" *ngIf="calendar">
+        <ion-button color="primary" size="small" (click)="calendarService.getCurrentMonth()">
+          <ion-label>Today</ion-label>
+        </ion-button>
+      </ion-buttons>
+
+      <ion-buttons slot="primary" *ngIf="!calendar">
+        <div *ngIf="!user">
+          <ion-button (click)="openRegister()" class="ion-hide-sm-down">
+            <ion-icon name="key-outline" slot="start"></ion-icon>
+            Signup
+          </ion-button>
+          <ion-button (click)="openLogin()">
+            <ion-icon name="log-in-outline" slot="start"></ion-icon>
+            Login
+          </ion-button>
+        </div>
+        <div *ngIf="user">
+          <ion-button (click)="goTo('/calendar')">
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            Calendar
+          </ion-button>
+          <ion-button (click)="logout()" class="ion-hide-sm-down">
+            <ion-icon name="log-out-outline" slot="start"></ion-icon>
+            Logout
+          </ion-button>
+        </div>
+      </ion-buttons>
+
+    </ion-toolbar>
+  </ion-header>
+
+
+
+  <ion-menu contentId="main" menuId="menu">
+    <ion-content>
+      <div class="profile" *ngIf="user">
+        <ion-text color="primary">
+          {{user.username}}
+        </ion-text>
+      </div>
+      <ion-list>
+        <div *ngIf="!user">
+          <ion-item button (click)="openRegister()">
+            <ion-icon name="key-outline"></ion-icon>
+            <ion-label>Signup</ion-label>
+          </ion-item>
+
+          <ion-item button (click)="openLogin()">
+            <ion-icon name="log-in-outline"></ion-icon>
+            <ion-label>Login</ion-label>
+          </ion-item>
+        </div>
+
+        <div *ngIf="user">
+          <ion-item button (click)="goTo('/home')">
+            <ion-icon name="home-outline" padding></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+          <ion-item button (click)="goTo('/calendar')">
+            <ion-icon name="calendar-outline" padding></ion-icon>
+            <ion-label>Calendar</ion-label>
+          </ion-item>
+          <ion-item button (click)="goTo('/stats')">
+            <ion-icon name="analytics-outline" padding></ion-icon>
+            <ion-label>Statistics</ion-label>
+          </ion-item>
+          <ion-item button (click)="openActivities()">
+            <ion-icon name="golf-outline" padding></ion-icon>
+            <ion-label>Activities</ion-label>
+          </ion-item>
+          <ion-item button (click)="openConditions()">
+            <ion-icon name="star-outline" padding></ion-icon>
+            <ion-label>Conditions</ion-label>
+          </ion-item>
+          <ion-item button (click)="goTo('/stats/tabs/absurd')" *ngIf="settings && settings.addons.existentialDread.enabled">
+            <ion-icon name="skull-outline" padding></ion-icon>
+            <ion-label>State of the Absurd</ion-label>
+          </ion-item>
+          <ion-item button (click)="goTo('/olympus')" *ngIf="settings && settings.addons.existentialDread.enabled">
+            <ion-icon name="albums-outline" padding></ion-icon>
+            <ion-label>Mountains of Olympus</ion-label>
+          </ion-item>
+          <ion-item button (click)="openSettings()">
+            <ion-icon name="settings-outline" padding></ion-icon>
+            <ion-label>Settings</ion-label>
+          </ion-item>
+          <ion-item button (click)="logout()">
+            <ion-icon name="log-out-outline" padding></ion-icon>
+            <ion-label>Logout</ion-label>
+          </ion-item>
+        </div>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+
+  <ion-content>
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-content>
+  <ion-footer *ngIf="ageTimer.birthdate">
+    <ion-toolbar>
+      <div class="age-timer">
+        <div class="age">AGE</div>
+        <div class="timer"><span class="year">{{ageTimer.year}}</span><span
+            class="fraction">.{{ ageTimer.fraction }}</span>
+        </div>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</ion-app>
