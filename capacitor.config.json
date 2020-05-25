@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "seshtat-app",
+  "appId": "com.seshtat.app",
+  "appName": "Seshtat",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
