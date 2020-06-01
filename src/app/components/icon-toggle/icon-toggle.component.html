@@ -1,7 +1,8 @@
 <div class="container">
   <ion-buttons>
     <ion-button slot="icon-only" (click)="onToggled()" shape="round" color="primary" [fill]="fill" size="large">
-      <ion-icon [name]="icon"></ion-icon>
+      <ion-icon [name]="icon" *ngIf="icon"></ion-icon>
+      <ion-icon [src]="src" *ngIf="src"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-label>{{ label }}</ion-label>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1>Mountains</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="mountains">
+    <ion-list *ngIf="mountains.length > 0">
+      <ion-item *ngFor="let mountain of mountains; let i = index" (click)="onSelectMountain(mountain)" button>
+        <ion-icon class="icon" [src]="'./assets/mountain/' + mountain.icon + '.svg'" color="primary"></ion-icon>
+        <ion-label class="name">{{ mountain.name | titlecase}}</ion-label>
+        <ion-buttons>
+          <ion-button slot="icon-only" color="dark" size="small" (click)="onDeleteMountain($event, mountain, i)">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+
+    <div class="no-items" *ngIf="mountains.length == 0">
+      <ion-label color="medium">You have no mountains! Please create new ones in order to start creating steps.</ion-label>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="onAddMountain()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Add Mountain
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1 *ngIf="!edit">Add Mountain</h1>
+        <h1 *ngIf="edit">Edit Mountain</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<div class="sub-header">
+  <ion-item>
+    <ion-input type="text" placeholder="Name" [(ngModel)]="mountainCopy.name" (change)="onChanges()"></ion-input>
+    <ion-icon [src]="'./assets/mountain/' + mountainCopy.icon + '.svg'" slot="start" color="primary" align-self-center></ion-icon>
+  </ion-item>
+</div>
+
+<ion-content>
+  <div class="container">
+    <div class="group" *ngFor="let group of icons">
+      <ion-label color="medium">{{ group.group }}</ion-label>
+      <div>
+        <ion-button slot="icon-only" *ngFor="let icon of group.icons" color="medium" fill="transparent"
+          (click)="setIcon(icon)">
+          <ion-icon [src]="'./assets/mountain/' + icon + '.svg'"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="updateMountain()" *ngIf="edit">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save Mountain
+      </ion-button>
+      <ion-button color="primary" style="flex: 1" (click)="createMountain()" *ngIf="!edit">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save Mountain
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

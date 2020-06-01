@@ -1,17 +1,26 @@
 ion-content {
-    #step-tree {
+    .container {
         width: 100%;
-        height: 100%;
-        background-color: #375771;
-    }
-    .under-construction {
-        width: 100%;
-        height: 100%;
+        max-height: calc(100vh - 56px - var(--sesh-age-timer));
         display: flex;
-        justify-content: center;
-        align-items: center;
-        ion-text {
-            text-align: center;
+        flex-direction: column;
+
+        ion-fab {
+            margin: 16px;
+        }
+        #step-tree {
+            flex: 1;
+            overflow: auto;
+            // background-color: #375771;
+        }
+        .mountains {
+            padding: 10px 0px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            border-style: solid;
+            border-color: var(--ion-border-color,#ededed);
+            border-width: 1px 0px 1px 0px;
         }
     }
 }

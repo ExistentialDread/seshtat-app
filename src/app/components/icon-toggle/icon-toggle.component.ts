@@ -7,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChange
 })
 export class IconToggleComponent implements OnInit, OnChanges {
   @Input() icon: string;
+  @Input() src: string;
   @Input() label: string;
   @Input() selected: boolean;
   @Output() toggled: EventEmitter<boolean> = new EventEmitter();

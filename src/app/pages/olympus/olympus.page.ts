@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { SVG, Svg, G } from '@svgdotjs/svg.js';
 import { Subscription } from 'rxjs';
-import { Step, StepNode, Path } from '@data/models';
-import { AlertService } from '@core/services';
+import { Step, StepNode, Path, Mountain } from '@data/models';
+import { AlertService, NavigationService } from '@core/services';
 import { StepService } from '@data/services';
-
-import { icons } from '@data/models/step-icons';
+import { ModalController } from '@ionic/angular';
+import { MountainDetailsPage, StepDetailsPage, MountainsPage } from 'src/app/modals/mountain';
 
 @Component({
   selector: 'app-olympus',
@@ -19,12 +19,24 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
 
   svg: Svg;
   steps: Step[];
-  stepNodes: StepNode[];
+  stepNodes: StepNode[] = [];
+
+  mountains: Mountain[];
 
   constructor(public alertService: AlertService,
-              private stepService: StepService) { }
+              private stepService: StepService,
+              public navigationService: NavigationService,
+              private modalCtrl: ModalController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    try {
+      this.mountains = await this.stepService.getAllMountains();
+      this.mountains.forEach(mountain => {
+        mountain.selected = true;
+      });
+    } catch (err) {
+      this.alertService.error(err);
+    }
   }
 
   ngOnDestroy() {
@@ -32,22 +44,28 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngAfterViewInit() {
-    /*
-    this.svg = SVG().addTo('#step-tree').size('1000px','1000px');
-    this.svg.defs().element('style').words(
-      "@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed'); "
-          + "@import url('./assets/stepTree/style.css');"
-    );
+
+    this.initSVG();
 
     await this.getSteps();
-    this.drawStepTree();
-    */
+    await this.drawStepTree();
+  }
+
+  initSVG(clear = false) {
+    if(!clear) {
+      this.svg = SVG().addTo('#step-tree').size('1000px','1000px');
+      this.svg.defs().element('style').words(
+        "@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed'); "
+            + "@import url('./assets/stepTree/style.css');"
+      );
+    } else {
+      this.svg.clear();
+    }
   }
 
   async getSteps() {
     try {
       this.steps = await this.stepService.getAll();
-      this.stepNodes = [];
       this.steps.forEach(step => {
         this.stepNodes.push(new StepNode(step));
       });
@@ -56,30 +74,38 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  drawStepTree() {
+  async drawStepTree() {
     for(let stepNode of this.stepNodes) {
-      this.drawStep(stepNode);
-      for(let path of stepNode.step.paths) {
-        this.drawPath(stepNode, path);
-      }
+      await this.drawStep(stepNode);
     }
   }
 
-  drawStep(node: StepNode) {
-    node.content = this.svg.group().x(0).y(0);
+  async drawStep(node: StepNode) {
+    if(node.content) {
+      node.content.clear();
+    }
+    node.content = this.svg.group().x(0).y(0).click((event) => {
+      this.openStepDetails(node.step, node);
+    });
+    node.content.clear();
     // Add outline of the node
-    node.content.path("M0 0 H50 V66 L42 74 H0 Z M50 50 H0").attr('class', 'node-outline');
+    node.content.path("M0 0 h50 v66 l-8 8 H0 Z M50 50 H0").attr('class', 'node-outline');
     // Add Selected Indicator path
     node.content.path("M3 8 V3 H8 M47 42 V47 H42").attr('class', 'node-selected-indicator');
     // Add icon text
-    node.content.nested().size('50','50').viewbox('-5 -5 60 60').path(icons[node.getIcon()]).attr({'class': ('icon'), x:0, y:50, height:'50px', width: '50px'});
-    // Add const
+    const icon = await this.stepService.loadIcon(node.getIcon());
+    node.content.nested().svg(icon).addClass('icon').children()[0].attr({height: "46", x:2, y:2});
+    // Add cost
     node.content.plain('' + node.getAdvancement()).attr({'class': 'cost', x:25,y:68});
 
     // Position the node
     node.content.translate(node.getX(), node.getY());
 
     // Style the node
+    node.content.removeClass('locked');
+    node.content.removeClass('inprogress');
+    node.content.removeClass('done');
+    node.content.removeClass('god');
     node.content.addClass('node');
     if(node.isDone()) {
       node.content.addClass('done');
@@ -94,22 +120,21 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
 
     // draw arrow in
     if(!node.step.isLeaf) {
-      const arrowG = node.content.group();
-      arrowG.path("M25 75 l5 5 h-10 Z").addClass('edge-arrow')
+      let arrowG = node.content.group();
+      arrowG.path("M25 75 l5 5 h-10 Z").addClass('edge-arrow');
       arrowG.path("M25 80 v15").addClass('edge-end');
-      node.paths.push(arrowG);
     }
 
-    // Node behaviour
-    node.content.click(() => {
-      // this.selectNode(node);
-      console.log(node);
-    });
+    for(let path of node.step.paths) {
+      this.drawPath(node, path);
+    }
   }
 
   drawPath(node: StepNode, path: Path[]) {
+    node.paths.forEach(p => p.remove());
+
     // Move to the start of the node
-    let pathString:string = "M" + (node.getX()+25) + " " + (node.getY());
+    let pathString:string = "M" + (node.getX()+25) + " " + (node.getY()-1);
     // creat a small edge as the begining
     pathString += " v-15";
 
@@ -139,5 +164,61 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
     }
     // Add the path group to the node
     node.paths.push(pathGroup);
+  }
+
+
+
+  async openMountainsModal() {
+    const mountains = this.mountains;
+    const modal = await this.modalCtrl.create({
+      component: MountainsPage,
+      componentProps: {
+        mountains
+      },
+      backdropDismiss: false,
+    });
+    modal.onDidDismiss().then(async changed => {
+      if(changed.data == this.navigationService.RETURN_CODE.DELETED) {
+        // need to redraw if a mountain was deleted
+        this.initSVG();
+        await this.getSteps();
+        await this.drawStepTree();
+      }
+    })
+    await modal.present();
+  }
+
+  async openStepDetails(step?: Step, node?: StepNode) {
+    if(this.mountains.length == 0) {
+      await this.openMountainsModal();
+      return;
+    }
+    const modal = await this.modalCtrl.create({
+      component: StepDetailsPage,
+      componentProps: {
+        step,
+        mountains: this.mountains
+      },
+      backdropDismiss: false,
+    });
+    modal.onDidDismiss().then(changed => {
+      if(step) { // we are updating a step
+        this.drawStep(node);
+      } else { // a new step
+        if(changed.data) {
+          console.log(changed.data);
+          const newNode = new StepNode(changed.data);
+          this.stepNodes.push(newNode);
+          this.drawStep(newNode);
+        }
+
+      }
+
+    });
+    await modal.present();
+  }
+
+  toggleMountain(selected: boolean, mountain: Mountain) {
+    mountain.selected = !selected;
   }
 }

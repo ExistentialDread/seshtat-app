@@ -114,9 +114,11 @@ export class AppComponent implements OnInit, OnDestroy {
         this.settingsService.applyColors();
         // get the birthdate to show for the age timer
         if (addons.existentialDread.enabled && addons.ageTimer.enabled) {
+          document.documentElement.style.setProperty('--sesh-age-timer', '56px');
           this.ageTimer.birthdate = moment(addons.ageTimer.birthday);
           this.computeAgeTimer();
         } else {
+          document.documentElement.style.setProperty('--sesh-age-timer', '0px');
           if (this.ageTimer.interval) {
             clearInterval(this.ageTimer.interval);
           }
@@ -213,8 +215,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.ageTimer.timer = moment().diff(this.ageTimer.birthdate, 'years', true);
     this.ageTimer.interval = setInterval(() => {
-      this.ageTimer.timer += 0.00000001;
-      timerString = this.ageTimer.timer.toFixed(8).split('.');
+      this.ageTimer.timer += 0.000000001;
+      timerString = this.ageTimer.timer.toFixed(9).split('.');
       this.ageTimer.year = timerString[0];
       this.ageTimer.fraction = timerString[1];
     }, 31);

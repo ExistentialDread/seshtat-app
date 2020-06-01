@@ -37,7 +37,7 @@ g.node:hover path.node-outline, g.node-selected path.node-outline {
 
 g.node path.node-outline {
     /* background color of any node */
-    fill: #4e6376;
+    /* fill: #4e6376; */
     /* outline color */
     stroke: #909c9b;
 }
@@ -54,9 +54,12 @@ g.node.done {
 }
 
 /* Inprogress */
+g.node.inprogress path.node-outline{
+    stroke: #2a3233;
+}
 g.node.inprogress {
     /* text color of inprogress */
-    fill: white;
+    fill: #2a3233;
 }
 
 /* Locked */
@@ -78,10 +81,6 @@ g.node.god {
 }
 
 
-text.icon {
-  font-family: 'skills';
-  font-size: 36pt;
-}
 text.cost {
   font-family: 'Roboto Condensed', sans-serif;
   text-anchor: middle;
@@ -98,10 +97,10 @@ path.edge-arrow {
   fill: #909c9b;
 }
 
-g.edge.done, g.node.done .edge-end {
+/* g.edge.done, g.node.done .edge-end {
   stroke: #e8d470;
 }
 .node.done .edge-arrow {
     fill: #e8d470;
-}
+} */
 

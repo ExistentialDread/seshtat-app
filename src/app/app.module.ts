@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from '@core/interceptors';
 import { CoreModule } from './core';
 import { SigninModalModule, SignupModalModule, ResetPasswordModalModule } from './modals/user';
@@ -23,6 +23,7 @@ import { RequirementsPageModule } from './modals/condition/requirements/requirem
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
+            HttpClientModule,
             CoreModule, SigninModalModule, SignupModalModule, ResetPasswordModalModule, SettingsPageModule,
             ActivitiesPageModule, ActivityDetailsPageModule, ConditionsPageModule, ConditionDetailsPageModule,
             RequirementsPageModule],

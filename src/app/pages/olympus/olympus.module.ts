@@ -7,13 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { OlympusPageRoutingModule } from './olympus-routing.module';
 
 import { OlympusPage } from './olympus.page';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { MountainsPageModule } from 'src/app/modals/mountain/mountains/mountains.module';
+import { StepDetailsPageModule } from 'src/app/modals/mountain/step-details/step-details.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    OlympusPageRoutingModule
+    ComponentsModule,
+    OlympusPageRoutingModule,
+    MountainsPageModule,
+    StepDetailsPageModule
   ],
   declarations: [OlympusPage]
 })

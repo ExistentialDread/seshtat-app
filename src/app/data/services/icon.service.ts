@@ -150,6 +150,56 @@ export class IconService {
                 'star-half',
                 'star-outline',
     ];
+
+    public mountainIcons: {group: string, icons: string[]}[] = [
+        {
+            group: 'Greek Gods',
+            icons: ['hermes',
+            'caduceus', 
+            'metis',
+            'phoebe',
+            //https://www.behance.net/gallery/59801849/Plutus-Logo?tracking_source=search_projects_recommended%7Cplutus
+            'plutus']
+        },
+        {
+            group: 'Finance',
+            icons: [
+                'kubera_i',
+                'kubera_ii',
+                'kubera_iii',
+                'kubera_iv',
+                'kubera_v',
+                'liberalitas_i',
+                'liberalitas_ii',
+                'moneta_i',
+                'moneta_ii',
+                'moneta_iii',
+                'vesta',
+            ]
+        },
+        {
+            group: 'Sports',
+            icons: []
+        },
+        {
+            group: 'Travel',
+            icons: []
+        },
+        {
+            group: 'Languages',
+            icons: []
+        },
+        {
+            group: 'Work & Studies',
+            icons: []
+        },
+        {
+            group: 'Love & Relationships',
+            icons: []
+        },
+    ]
+
+
     constructor() {}
 
     getIconsList(): {group: string, icons: string[]}[] {
@@ -158,6 +208,10 @@ export class IconService {
 
     getConditionIcons(): string[] {
         return this.conditionIcons;
+    }
+
+    getMountainIcons(): {group: string, icons: string[]}[] {
+        return this.mountainIcons;
     }
 
 }

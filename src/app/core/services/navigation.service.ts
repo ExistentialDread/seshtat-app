@@ -9,6 +9,13 @@ import { Subject, Observable } from 'rxjs';
 export class NavigationService {
   private closeModalsSubject = new Subject<boolean>();
 
+  public RETURN_CODE = {
+    NO_CHANGE: 0,
+    DELETED: 1,
+    UPDATED: 2,
+    CREATED: 3
+  }
+
   constructor(private navCtrl: NavController,
               private menuCtrl: MenuController) { }
 

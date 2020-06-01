@@ -1,8 +1,19 @@
 <ion-content>
-    <div class="under-construction">
-        <ion-text color="medium">Olympus is still under developement, it is planned for the next version. Thank you for your patience.</ion-text>
-    </div>
-    <div id="step-tree" *ngIf="svg">
+    <div class="container">
+        <ion-fab vertical="bottom" horizontal="end">
+            <ion-fab-button (click)="openStepDetails()">
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </ion-fab>
 
+        <div class="mountains">
+            <app-icon-toggle *ngFor="let mountain of mountains" [src]="'./assets/mountain/' + mountain.icon + '.svg'" [label]="mountain.name" [selected]="mountain.selected"
+                (toggled)="toggleMountain($event, mountain)">
+            </app-icon-toggle>
+            <app-icon-toggle icon="add" label="New/Edit" (toggled)="openMountainsModal()"></app-icon-toggle>
+        </div>
+        <div id="step-tree">
+
+        </div>
     </div>
 </ion-content>

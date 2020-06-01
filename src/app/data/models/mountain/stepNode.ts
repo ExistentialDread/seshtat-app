@@ -52,6 +52,8 @@ export class StepNode {
     }
 
     getAdvancement() {
+        if(!this.step.actions || this.step.actions.length == 0) return '0/0';
+        console.log(this.step.actions);
         const done = this.step.actions.filter(action => action.done == true).length;
         return done + '/' + this.step.actions.length;
     }

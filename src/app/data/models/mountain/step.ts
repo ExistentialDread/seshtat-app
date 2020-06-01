@@ -1,9 +1,10 @@
 
 import { G } from '@svgdotjs/svg.js';
+import { Mountain } from './mountain';
 
 export interface Path {
-    col: number,
-    row: number,
+    col: number;
+    row: number;
 }
 
 export interface Action {
@@ -11,12 +12,12 @@ export interface Action {
     done: boolean;
 }
 
+
 export interface Step {
     id?: number;
     title: string;
     description: string;
     outcome: string;
-    mountainId: number;
     isGod?: boolean,
     isLeaf?: boolean;
     row: number;
@@ -25,4 +26,8 @@ export interface Step {
     status: 'INPROGRESS' | 'LOCKED' | 'DONE';
     paths: Path[][];
     actions: Action[];
+
+    userId?: number;
+    mountainId: number;
+    mountain?: Mountain;
 }

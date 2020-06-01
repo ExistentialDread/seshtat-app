@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" (click)="closeModal()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="title">
+      <div class="logo-icon-bg">
+        <ion-icon src="./assets/icon.svg"></ion-icon>
+      </div>
+      <ion-text color="primary">
+        <h1 *ngIf="!edit">Add Step</h1>
+        <h1 *ngIf="edit">Edit Step</h1>
+      </ion-text>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<div class="sub-header">
+  <ion-item>
+    <ion-input type="text" placeholder="Title" [(ngModel)]="stepCopy.title" (change)="onChanges()"></ion-input>
+    <ion-icon [src]="'./assets/mountain/' + stepCopy.icon + '.svg'" slot="start" color="primary" align-self-center></ion-icon>
+  </ion-item>
+</div>
+
+<ion-content>
+  <div class="container">
+    <!-- Icons -->
+    <div class="group" >
+      <ion-label color="medium">Icons</ion-label>
+      <div *ngFor="let group of icons">
+        <ion-button slot="icon-only" *ngFor="let icon of group.icons" color="medium" fill="transparent"
+          (click)="setIcon(icon)">
+          <ion-icon [src]="'./assets/mountain/' + icon + '.svg'"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Description & Outcome -->
+    <div class="group">
+      <ion-label color="medium">Description & Outcome</ion-label>
+      <ion-item>
+        <ion-label>Mountain</ion-label>
+        <ion-select [(ngModel)]="stepCopy.mountainId" (change)="onChanges()">
+          <ion-select-option *ngFor="let mountain of mountains" [value]="mountain.id">{{mountain.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select [(ngModel)]="stepCopy.status" (change)="onChanges()">
+          <ion-select-option value="LOCKED">Locked</ion-select-option>
+          <ion-select-option value="INPROGRESS">In progress</ion-select-option>
+          <ion-select-option value="DONE">Done</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-checkbox [(ngModel)]="stepCopy.isGod" (change)="onChanges()"></ion-checkbox>
+        <ion-label>This step is a God</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-checkbox [(ngModel)]="stepCopy.isLeaf" (change)="onChanges()"></ion-checkbox>
+        <ion-label>This step is a leaf</ion-label>
+      </ion-item>
+      <ion-item>
+          <ion-label>Row</ion-label>
+          <ion-input type="text" placeholder="Row" [(ngModel)]="stepCopy.row" (change)="onChanges()">
+          </ion-input>
+          <ion-label>Col</ion-label>
+          <ion-input type="text" placeholder="Col" [(ngModel)]="stepCopy.col" (change)="onChanges()">
+          </ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-textarea placeholder="Description..."[(ngModel)]="stepCopy.description" (change)="onChanges()"></ion-textarea>
+      </ion-item>
+      <ion-item>
+          <ion-textarea placeholder="You finished this step? What was the outcome?"[(ngModel)]="stepCopy.outcome" (change)="onChanges()"></ion-textarea>
+      </ion-item>
+    </div>
+
+    <!-- Actions -->
+    <div class="group">
+      <div class="label">
+        <ion-label color="medium">Actions</ion-label>
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addAction()">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <ion-list class="actions">
+        <ion-item *ngFor="let ac of stepCopy.actions; let i = index">
+          <ion-checkbox [(ngModel)]="ac.done"></ion-checkbox>
+          <ion-input placeholder="Something to do to finish this step..." [(ngModel)]="ac.title"></ion-input>
+          <ion-buttons>
+            <ion-button slot="icon-only" color="primary" (click)="removeAction(i)">
+              <ion-icon name="remove"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+      </ion-list>
+    </div>
+    <!-- Paths -->
+    <div class="group">
+      <div class="label">
+        <ion-label color="medium">Paths</ion-label>
+        <ion-buttons>
+          <ion-button slot="icon-only" color="primary" (click)="addPath()">
+            <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <div class="path" *ngFor="let path of stepCopy.paths; let i = index">
+        <div class="path-header">
+          <ion-text color="light">Path {{i+1}}</ion-text>
+          <ion-buttons>
+            <ion-button slot="icon-only" color="light" size="small"
+              (click)="removePath(i)">
+              <ion-icon name="close" size="small"></ion-icon>
+            </ion-button>
+            <ion-button slot="icon-only" color="light" size="small"
+              (click)="addSubpath(path)">
+              <ion-icon name="add"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <div class="list">
+          <ion-item *ngFor="let subpath of path; let j = index">
+            <ion-label>Row</ion-label>
+            <ion-input type="text" placeholder="Row" [(ngModel)]="subpath.row" (change)="onChanges()">
+            </ion-input>
+            <ion-label>Col</ion-label>
+            <ion-input type="text" placeholder="Col" [(ngModel)]="subpath.col" (change)="onChanges()">
+            </ion-input>
+            <ion-buttons>
+              <ion-button slot="icon-only" color="light" size="small"
+                (click)="removeSubpath(path, j)">
+                <ion-icon name="close" size="small"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer">
+      <ion-button color="primary" style="flex: 1" (click)="createOrUpdateStep()">
+        <ion-icon slot="start" name="checkmark"></ion-icon>
+        Save Step
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
