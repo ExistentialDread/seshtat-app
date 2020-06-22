@@ -154,32 +154,47 @@ export class IconService {
     public mountainIcons: {group: string, icons: string[]}[] = [
         {
             group: 'Greek Gods',
-            icons: ['hermes',
-            'caduceus', 
-            'metis',
-            'phoebe',
+            icons: ['gods/hermes',
+            'gods/caduceus', 
+            'gods/metis',
+            'gods/phoebe',
             //https://www.behance.net/gallery/59801849/Plutus-Logo?tracking_source=search_projects_recommended%7Cplutus
-            'plutus']
+            'gods/plutus',
+            'gods/zeus',
+            'gods/ares',
+        ]
         },
         {
             group: 'Finance',
             icons: [
-                'kubera_i',
-                'kubera_ii',
-                'kubera_iii',
-                'kubera_iv',
-                'kubera_v',
-                'liberalitas_i',
-                'liberalitas_ii',
-                'moneta_i',
-                'moneta_ii',
-                'moneta_iii',
-                'vesta',
+                'finance/kubera_i',
+                'finance/kubera_ii',
+                'finance/kubera_iii',
+                'finance/kubera_iv',
+                'finance/kubera_v',
+                'finance/liberalitas_i',
+                'finance/liberalitas_ii',
+                'finance/moneta_i',
+                'finance/moneta_ii',
+                'finance/moneta_iii',
+                'finance/vesta',
             ]
         },
         {
             group: 'Sports',
-            icons: []
+            icons: ['sport/arm_i', 'sport/arm_ii', 'sport/arm_iii', 'sport/arm_iv', 'sport/arm_v', 'sport/arm_vi', 'sport/arm_vii',
+                    'sport/forearm_i','sport/forearm_ii','sport/forearm_iii','sport/forearm_iv','sport/forearm_v','sport/forearm_vi','sport/forearm_vii',
+                    'sport/shoulder_i', 'sport/shoulder_ii', 'sport/shoulder_iii', 'sport/shoulder_iv', 'sport/shoulder_v', 'sport/shoulder_vi', 'sport/shoulder_vii',
+                    'sport/chest_i', 'sport/chest_ii', 'sport/chest_iii', 'sport/chest_iv', 'sport/chest_v', 'sport/chest_vi', 'sport/chest_vii',
+                    // 'abs_i', 'abs_ii', 'abs_iii', 'abs_iv', 'abs_v', 'abs_vi', 'abs_vii',
+                    // 'back_i', 'back_ii', 'back_iii', 'back_iv', 'back_v',
+                    'sport/quad_i', 'sport/quad_ii', 'sport/quad_iii', 'sport/quad_iv', 'sport/quad_v', 'sport/quad_vi', 'sport/quad_vii',
+                    'sport/calf_i', 'sport/calf_ii', 'sport/calf_iii', 'sport/calf_iv', 'sport/calf_v', 'sport/calf_vi', 'sport/calf_vii',
+                    //<a href="https://icon-library.net/icon/healthy-eating-icon-20.html">Healthy Eating Icon #87012</a>
+                    'sport/eating_i','sport/eating_ii','sport/eating_iii','sport/eating_iv',
+                    'sport/smoking_i','sport/smoking_ii','sport/smoking_iii','sport/smoking_iv',
+
+                ]
         },
         {
             group: 'Travel',

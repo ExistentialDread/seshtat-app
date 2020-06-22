@@ -93,8 +93,12 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
     // Add Selected Indicator path
     node.content.path("M3 8 V3 H8 M47 42 V47 H42").attr('class', 'node-selected-indicator');
     // Add icon text
-    const icon = await this.stepService.loadIcon(node.getIcon());
-    node.content.nested().svg(icon).addClass('icon').children()[0].attr({height: "46", x:2, y:2});
+    try {
+      const icon = await this.stepService.loadIcon(node.getIcon());
+      node.content.nested().svg(icon).addClass('icon').children()[0].attr({height: "46", x:0, y:2});
+    } catch (ex) {
+      console.log(ex);
+    }
     // Add cost
     node.content.plain('' + node.getAdvancement()).attr({'class': 'cost', x:25,y:68});
 
