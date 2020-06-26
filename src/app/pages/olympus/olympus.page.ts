@@ -22,7 +22,7 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
   svg: any;
   steps: Step[];
   stepNodes: StepNode[] = [];
-  zoomLvl = 1;
+  zoomLvl = 0.75;
   menuActivated = true;
 
   mountains: Mountain[];
@@ -97,7 +97,7 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
 
   async drawStepTree() {
     for(let stepNode of this.stepNodes) {
-      await this.drawStep(stepNode);
+      this.drawStep(stepNode);
     }
   }
 
