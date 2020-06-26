@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
-import { SVG, Svg, G } from '@svgdotjs/svg.js';
+import { SVG, Svg } from '@svgdotjs/svg.js';
+import '@svgdotjs/svg.panzoom.js';
+
 import { Subscription } from 'rxjs';
 import { Step, StepNode, Path, Mountain } from '@data/models';
 import { AlertService, NavigationService } from '@core/services';
 import { StepService } from '@data/services';
 import { ModalController } from '@ionic/angular';
-import { MountainDetailsPage, StepDetailsPage, MountainsPage } from 'src/app/modals/mountain';
+import { StepDetailsPage, MountainsPage } from 'src/app/modals/mountain';
 
 @Component({
   selector: 'app-olympus',
@@ -17,9 +19,11 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
 
   subs: Subscription[] = [];
 
-  svg: Svg;
+  svg: any;
   steps: Step[];
   stepNodes: StepNode[] = [];
+  zoomLvl = 1;
+  menuActivated = true;
 
   mountains: Mountain[];
 
@@ -53,7 +57,7 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
 
   initSVG(clear = false) {
     if(!clear) {
-      this.svg = SVG().addTo('#step-tree').size('1000px','1000px');
+      this.svg = SVG().addTo('#step-tree').size('100%','100%').viewbox('0 0 2000 1500').panZoom({ zoomMin: 0.25, zoomMax: 2});
       this.svg.defs().element('style').words(
         "@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed'); "
             + "@import url('./assets/stepTree/style.css');"
@@ -62,6 +66,23 @@ export class OlympusPage implements OnInit, OnDestroy, AfterViewInit {
       this.svg.clear();
     }
   }
+
+  zoom(zoom: boolean) {
+    if(zoom) {
+      this.zoomLvl+=0.25;
+      this.zoomLvl = this.zoomLvl > 2 ? 2 : this.zoomLvl;
+    } else {
+      this.zoomLvl -= 0.25;
+      this.zoomLvl = this.zoomLvl < 0.25 ? 0.25 : this.zoomLvl;
+    }
+    this.svg.zoom(this.zoomLvl);
+    this.menuActivated = true;
+      
+  }
+  reset() {
+    this.svg.zoom(1, {x: 0, y: 0});
+  }
+
 
   async getSteps() {
     try {

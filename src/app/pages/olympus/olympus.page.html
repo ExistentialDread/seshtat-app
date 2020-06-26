@@ -1,6 +1,12 @@
 <ion-content>
     <div class="container">
         <ion-fab vertical="bottom" horizontal="end">
+            <ion-fab-button color="light" size="small" (click)="zoom(false)">
+                <ion-icon name="remove-circle-outline"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="light" size="small" (click)="zoom(true)">
+                <ion-icon name="add-circle-outline"></ion-icon>
+            </ion-fab-button>
             <ion-fab-button (click)="openStepDetails()">
                 <ion-icon name="add"></ion-icon>
             </ion-fab-button>

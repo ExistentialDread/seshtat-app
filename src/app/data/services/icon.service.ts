@@ -172,6 +172,8 @@ export class IconService {
                 'finance/kubera_iii',
                 'finance/kubera_iv',
                 'finance/kubera_v',
+                'finance/kubera_vi',
+                'finance/kubera_vii',
                 'finance/liberalitas_i',
                 'finance/liberalitas_ii',
                 'finance/moneta_i',
