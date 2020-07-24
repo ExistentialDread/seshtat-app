@@ -12,8 +12,8 @@ import { Chart } from 'chart.js';
   styleUrls: ['./stats-overall.page.scss'],
 })
 export class StatsOverallPage implements OnInit, OnDestroy {
-  @ViewChild('gradeChart', {static: false}) gradeChart;
-  @ViewChild('weekGradeChart', {static: false}) weekGradeChart;
+  @ViewChild('gradeChart') gradeChart;
+  @ViewChild('weekGradeChart') weekGradeChart;
 
   private subs: Subscription[] = [];
 
